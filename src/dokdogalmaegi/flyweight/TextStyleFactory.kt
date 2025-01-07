@@ -7,10 +7,12 @@ object TextStyleFactory {
         return "$font[]$size[]$color"
     }
 
-    fun getStyle(font: String, size: Int, color: TextColor): TextStyle {
-        return styles.computeIfAbsent(getStyleKey(font, size, color)) {
+    fun getStyle(font: String, size: Int, color: TextColor): TextStyle =
+        styles.computeIfAbsent(getStyleKey(font, size, color)) {
             println("Creating new TextStyle")
-            TextStyle(font, size, color)
+            val textStyle = TextStyle(font, size, color)
+            MemoryMonitor.allocateMemory(textStyle.toString().length)
+
+            textStyle
         }
-    }
 }
