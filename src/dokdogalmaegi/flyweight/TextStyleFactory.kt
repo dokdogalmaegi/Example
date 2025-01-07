@@ -7,7 +7,7 @@ object TextStyleFactory {
         return "$font[]$size[]$color"
     }
 
-    fun getStyle(font: String, size: Int, color: TextColor): TextStyle =
+    fun getStyleWithFlyWeight(font: String, size: Int, color: TextColor): TextStyle =
         styles.computeIfAbsent(getStyleKey(font, size, color)) {
             println("Creating new TextStyle")
             val textStyle = TextStyle(font, size, color)
@@ -15,4 +15,12 @@ object TextStyleFactory {
 
             textStyle
         }
+
+    fun getStyle(font: String, size: Int, color: TextColor): TextStyle {
+        println("Creating new TextStyle")
+        val textStyle = TextStyle(font, size, color)
+        MemoryMonitor.allocateMemory(textStyle.toString().length)
+
+        return textStyle
+    }
 }
